@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence           http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+  <persistence-unit name="com.hnqd_Showroom_war_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.hnqd.pojo.Showroom</class>
+    <class>com.hnqd.pojo.Maintenance</class>
+    <class>com.hnqd.pojo.User</class>
+    <class>com.hnqd.pojo.Booking</class>
+    <class>com.hnqd.pojo.Rental</class>
+    <class>com.hnqd.pojo.Vehicle</class>
+    <class>com.hnqd.pojo.Invoicebuy</class>
+    <class>com.hnqd.pojo.Invoicerent</class>
+    <class>com.hnqd.pojo.Invoicemaintenance</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/showroom?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="123456"/>
+    </properties>
+  </persistence-unit>
+</persistence>
