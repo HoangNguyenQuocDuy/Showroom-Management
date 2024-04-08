@@ -50,8 +50,6 @@ public class Showroom implements Serializable {
     @Column(name = "location")
     private String location;
     @OneToMany(mappedBy = "showroomId")
-    private Set<User> userSet;
-    @OneToMany(mappedBy = "showroomId")
     private Set<Vehicle> vehicleSet;
 
     public Showroom() {
@@ -88,15 +86,6 @@ public class Showroom implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    @XmlTransient
-    public Set<User> getUserSet() {
-        return userSet;
-    }
-
-    public void setUserSet(Set<User> userSet) {
-        this.userSet = userSet;
     }
 
     @XmlTransient

@@ -10,6 +10,7 @@ import com.hnqd.repositories.UserRepository;
 import com.hnqd.services.UserService;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -75,5 +76,16 @@ public class UserServiceImpl implements UserService {
     public UserResponse getUserByEmail(String email) {
         UserResponse user = userRepository.getUserByEmail(email);
         return user;
+    }
+
+    @Override
+    public UserResponse getUserById(int userId) {
+        UserResponse user = userRepository.getUserById(userId);
+        return user;
+    }
+
+    @Override
+    public UserResponse updateUser(Map<String, String> params) {
+        return userRepository.updateUser(params);
     }
 }

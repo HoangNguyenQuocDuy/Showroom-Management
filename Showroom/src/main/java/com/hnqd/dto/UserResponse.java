@@ -33,9 +33,7 @@ public class UserResponse {
         user.setPassword(password);
         user.setEmail(email);
         user.setImage(image);
-        user.setRoleName(roleName);
-        user.setShowroomId(showroomId);
-        
+        user.setRoleName(roleName);        
         return user;
     }
 }

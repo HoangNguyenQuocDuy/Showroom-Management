@@ -4,10 +4,15 @@
  */
 package com.hnqd.configs;
 
+import com.cloudinary.Cloudinary;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -32,24 +37,25 @@ import org.springframework.security.config.annotation.authentication.configurati
     "com.hnqd.controllers",
     "com.hnqd.repositories",
     "com.hnqd.services",
-    "com.hnqd.configs",
-})
+    "com.hnqd.configs",})
+@PropertySource("classpath:application.properties")
 public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
-
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
+    @Autowired
+    private Environment env;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
-     @Bean
+
+    @Bean
     public AuthenticationProvider authenticationProvider() {
-         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
@@ -69,7 +75,12 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/auth/register", "/api/v1/auth/login", "/api/v1/users/**").permitAll()
+                .antMatchers("/api/v1/showrooms/**", "/api/v1/vehicles/create/**, "
+                        + "/api/v1/vehicles/delete/**", "/api/v1/vehicles/update/**",
+                        "/api/v1/vehicles/update/images/**")
+                .hasAnyAuthority("ADMIN")
+                .antMatchers("/api/v1/auth/register", "/api/v1/auth/login", "/api/v1/users/**", 
+                        "/api/v1/vehicles/**", "/cloudinary/upload").permitAll()
                 .anyRequest().authenticated();
 //            .authorizeRequests()
 //            .antMatchers("/login", "Showroom/api/v1/auth/**").permitAll()
@@ -83,6 +94,17 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
 //        http.logout().logoutSuccessUrl("/login");
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Bean
+    public Cloudinary getCloudinary() {
+        Map config = new HashMap();
+        config.put("cloud_name", env.getProperty("cloudinary.cloud-name"));
+        config.put("api_key", env.getProperty("cloudinary.api-key"));
+        config.put("api_secret", env.getProperty("cloudinary.api-secret"));
+        config.put("secure", true);
+
+        return new Cloudinary(config);
     }
 
 }

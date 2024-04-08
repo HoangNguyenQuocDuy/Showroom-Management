@@ -5,13 +5,12 @@ import com.hnqd.pojo.Invoicebuy;
 import com.hnqd.pojo.Invoicemaintenance;
 import com.hnqd.pojo.Maintenance;
 import com.hnqd.pojo.Rental;
-import com.hnqd.pojo.Showroom;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2024-04-04T21:10:17")
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2024-04-08T19:01:52")
 @StaticMetamodel(User.class)
 public class User_ { 
 
@@ -23,7 +22,6 @@ public class User_ {
     public static volatile SetAttribute<User, Rental> rentalSet1;
     public static volatile SingularAttribute<User, String> roleName;
     public static volatile SetAttribute<User, Booking> bookingSet;
-    public static volatile SingularAttribute<User, Showroom> showroomId;
     public static volatile SingularAttribute<User, Integer> id;
     public static volatile SetAttribute<User, Invoicebuy> invoicebuySet;
     public static volatile SetAttribute<User, Maintenance> maintenanceSet;

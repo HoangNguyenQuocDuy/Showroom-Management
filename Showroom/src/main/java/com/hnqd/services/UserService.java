@@ -8,15 +8,24 @@ import com.hnqd.dto.UserResponse;
 import com.hnqd.pojo.User;
 import com.hnqd.repositories.UserRepository;
 import java.util.List;
+import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  *
  * @author DELL
  */
-public interface UserService extends UserDetailsService{
+public interface UserService extends UserDetailsService {
+
     UserResponse getUserByUsername(String username);
+
+    UserResponse getUserById(int username);
+
     void addUser(User user) throws Exception;
+
     List<UserResponse> getUsers();
+
     UserResponse getUserByEmail(String email);
+    
+    UserResponse updateUser(Map<String, String> params);
 }

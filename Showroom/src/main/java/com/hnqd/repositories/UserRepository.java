@@ -7,6 +7,7 @@ package com.hnqd.repositories;
 import com.hnqd.dto.UserResponse;
 import com.hnqd.pojo.User;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -16,10 +17,14 @@ public interface UserRepository {
 
     UserResponse getUserByUsername(String username);
 
+    UserResponse getUserById(int username);
+
     void addUser(User userRequest);
 
     UserResponse getUserByEmail(String email);
-    
+
     List<UserResponse> getUsers();
+    
+    UserResponse updateUser(Map<String, String> params);
 
 }

@@ -9,7 +9,7 @@ import com.hnqd.pojo.User;
 import com.hnqd.repositories.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 import javax.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -86,12 +86,48 @@ public class UserRepositoryImpl implements UserRepository {
     private UserResponse mapToUserResponse(User user) {
         UserResponse userRes = new UserResponse();
         userRes.setUserId(user.getId());
+        userRes.setImage(user.getImage());
         userRes.setUsername(user.getUsername());
         userRes.setEmail(user.getEmail());
         userRes.setPassword(user.getPassword());
         userRes.setRoleName(user.getRoleName());
-        userRes.setShowroomId(user.getShowroomId());
 
         return userRes;
+    }
+
+    @Override
+    public UserResponse getUserById(int userId) {
+        Session s = factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM User WHERE id=:userId");
+        q.setParameter("id", userId);
+
+        User user = null;
+        UserResponse userResponse = null;
+        try {
+            user = (User) q.getSingleResult();
+            userResponse = mapToUserResponse(user);
+            return userResponse;
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public UserResponse updateUser(Map<String, String> params) {
+        Session s = factory.getObject().getCurrentSession();
+        User user = s.get(User.class, params.get("userId"));
+        
+        if (user != null) {
+            String image = params.get("image");
+            if (image != null && !image.isEmpty()) {
+                user.setImage(image);
+            }
+            
+            s.update(user);
+            
+            return mapToUserResponse(user);
+        }
+        
+        return null;
     }
 }

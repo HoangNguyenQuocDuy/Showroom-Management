@@ -11,6 +11,7 @@
     <class>com.hnqd.pojo.Invoicebuy</class>
     <class>com.hnqd.pojo.Invoicerent</class>
     <class>com.hnqd.pojo.Invoicemaintenance</class>
+    <class>com.hnqd.pojo.Image</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/showroom?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

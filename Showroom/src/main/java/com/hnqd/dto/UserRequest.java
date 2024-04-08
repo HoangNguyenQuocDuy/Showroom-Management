@@ -19,7 +19,6 @@ public class UserRequest {
     private String username;
     private String password;
     private String email;
-    private String image;
     private String roleName;
-    private Long showroomId;
+    private String image;
 }

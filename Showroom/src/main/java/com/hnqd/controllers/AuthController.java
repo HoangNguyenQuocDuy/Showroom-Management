@@ -42,22 +42,25 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserRequest userRequestDto) {
+    public ResponseEntity<?> register(@RequestBody UserRequest userRequest) {
         try {
-            UserResponse userFind = userService.getUserByUsername(userRequestDto.getUsername());
+            UserResponse userFind = userService.getUserByUsername(userRequest.getUsername());
             if (userFind != null) {
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(
                         "Username has exited!");
-            } else if (userService.getUserByEmail(userRequestDto.getEmail()) != null) {
+            } else if (userService.getUserByEmail(userRequest.getEmail()) != null) {
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(
                         "Email has been used!");
             } else {
                 User user = new User();
-                user.setUsername(userRequestDto.getUsername());
-                user.setPassword(userRequestDto.getPassword());
-                user.setEmail(userRequestDto.getEmail());
-                user.setImage(userRequestDto.getImage());
-                user.setRoleName(userRequestDto.getRoleName());
+                user.setUsername(userRequest.getUsername());
+                user.setPassword(userRequest.getPassword());
+                user.setEmail(userRequest.getEmail());
+                user.setRoleName(userRequest.getRoleName());
+                
+                if (userRequest.getImage() != null && !"".equals(userRequest.getImage())) {
+                    user.setImage(userRequest.getImage());
+                }
 
                 userService.addUser(user);
                 return ResponseEntity.status(HttpStatus.OK).body(

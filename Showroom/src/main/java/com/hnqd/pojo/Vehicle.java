@@ -14,7 +14,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -37,7 +39,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Vehicle.findById", query = "SELECT v FROM Vehicle v WHERE v.id = :id"),
     @NamedQuery(name = "Vehicle.findByName", query = "SELECT v FROM Vehicle v WHERE v.name = :name"),
     @NamedQuery(name = "Vehicle.findByPrice", query = "SELECT v FROM Vehicle v WHERE v.price = :price"),
-    @NamedQuery(name = "Vehicle.findByImage", query = "SELECT v FROM Vehicle v WHERE v.image = :image"),
     @NamedQuery(name = "Vehicle.findByBrand", query = "SELECT v FROM Vehicle v WHERE v.brand = :brand"),
     @NamedQuery(name = "Vehicle.findByStatus", query = "SELECT v FROM Vehicle v WHERE v.status = :status")})
 public class Vehicle implements Serializable {
@@ -58,9 +59,6 @@ public class Vehicle implements Serializable {
     @NotNull
     @Column(name = "price")
     private BigDecimal price;
-    @Size(max = 255)
-    @Column(name = "image")
-    private String image;
     @Lob
     @Size(max = 65535)
     @Column(name = "specifications")
@@ -75,6 +73,11 @@ public class Vehicle implements Serializable {
     @Size(max = 255)
     @Column(name = "status")
     private String status;
+    @JoinTable(name = "vehicle_image", joinColumns = {
+        @JoinColumn(name = "vehicle_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "image_id", referencedColumnName = "id")})
+    @ManyToMany
+    private Set<Image> imageSet;
     @OneToMany(mappedBy = "vehicleId")
     private Set<Booking> bookingSet;
     @OneToMany(mappedBy = "vehicleId")
@@ -124,14 +127,6 @@ public class Vehicle implements Serializable {
         this.price = price;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public String getSpecifications() {
         return specifications;
     }
@@ -162,6 +157,15 @@ public class Vehicle implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @XmlTransient
+    public Set<Image> getImageSet() {
+        return imageSet;
+    }
+
+    public void setImageSet(Set<Image> imageSet) {
+        this.imageSet = imageSet;
     }
 
     @XmlTransient
