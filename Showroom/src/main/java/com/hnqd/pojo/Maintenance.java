@@ -6,7 +6,6 @@ package com.hnqd.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,13 +17,11 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -64,14 +61,15 @@ public class Maintenance implements Serializable {
     @Column(name = "time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date time;
-    @OneToMany(mappedBy = "maintenanceId")
-    private Set<Invoicemaintenance> invoicemaintenanceSet;
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "showroom_id", referencedColumnName = "id")
     @ManyToOne
-    private User userId;
-    @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
+    private Showroom showroomId;
+    @JoinColumn(name = "staff_id", referencedColumnName = "id")
     @ManyToOne
-    private Vehicle vehicleId;
+    private User staffId;
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    @ManyToOne
+    private User customerId;
 
     public Maintenance() {
     }
@@ -128,29 +126,28 @@ public class Maintenance implements Serializable {
         this.time = time;
     }
 
-    @XmlTransient
-    public Set<Invoicemaintenance> getInvoicemaintenanceSet() {
-        return invoicemaintenanceSet;
+    public Showroom getShowroomId() {
+        return showroomId;
     }
 
-    public void setInvoicemaintenanceSet(Set<Invoicemaintenance> invoicemaintenanceSet) {
-        this.invoicemaintenanceSet = invoicemaintenanceSet;
+    public void setShowroomId(Showroom showroomId) {
+        this.showroomId = showroomId;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getStaffId() {
+        return staffId;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setStaffId(User staffId) {
+        this.staffId = staffId;
     }
 
-    public Vehicle getVehicleId() {
-        return vehicleId;
+    public User getCustomerId() {
+        return customerId;
     }
 
-    public void setVehicleId(Vehicle vehicleId) {
-        this.vehicleId = vehicleId;
+    public void setCustomerId(User customerId) {
+        this.customerId = customerId;
     }
 
     @Override

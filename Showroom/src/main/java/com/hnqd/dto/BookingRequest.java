@@ -4,9 +4,6 @@
  */
 package com.hnqd.dto;
 
-import java.sql.Timestamp;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +17,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BookingRequest {
     private String content;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp time;
+    private String time;
     private int vehicleId;
 }

@@ -5,21 +5,20 @@
 package com.hnqd.pojo;
 
 import java.io.Serializable;
-import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -45,8 +44,9 @@ public class Image implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "url")
     private String url;
-    @ManyToMany(mappedBy = "imageSet")
-    private Set<Vehicle> vehicleSet;
+    @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
+    @ManyToOne
+    private Vehicle vehicleId;
 
     public Image() {
     }
@@ -76,13 +76,12 @@ public class Image implements Serializable {
         this.url = url;
     }
 
-    @XmlTransient
-    public Set<Vehicle> getVehicleSet() {
-        return vehicleSet;
+    public Vehicle getVehicleId() {
+        return vehicleId;
     }
 
-    public void setVehicleSet(Set<Vehicle> vehicleSet) {
-        this.vehicleSet = vehicleSet;
+    public void setVehicleId(Vehicle vehicleId) {
+        this.vehicleId = vehicleId;
     }
 
     @Override

@@ -14,6 +14,10 @@ import com.hnqd.services.BookingService;
 import com.hnqd.services.EmailService;
 import com.hnqd.services.UserService;
 import com.hnqd.services.VehicleService;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,11 +56,18 @@ public class BookingServiceImpl implements BookingService {
 
         Booking booking = new Booking();
         booking.setContent(bookingRequest.getContent());
-        booking.setTime(bookingRequest.getTime());
+        booking.setTime(convertToDateTime(bookingRequest.getTime()));
         booking.setCustomerId(user.transferUser());
         booking.setVehicleId(vehicleResponse.transferVehicle());
 
         bookingRepository.addBooking(booking);
+    }
+    
+    public Date convertToDateTime(String dateTimeString) throws ParseException {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+        Date dateTime = dateFormat.parse(dateTimeString);
+        return dateTime;
     }
 
     @Override

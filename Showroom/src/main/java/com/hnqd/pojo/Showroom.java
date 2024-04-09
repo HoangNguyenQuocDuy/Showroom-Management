@@ -35,6 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Showroom.findByLocation", query = "SELECT s FROM Showroom s WHERE s.location = :location")})
 public class Showroom implements Serializable {
 
+    @OneToMany(mappedBy = "showroomId")
+    private Set<Maintenance> maintenanceSet;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -120,6 +123,15 @@ public class Showroom implements Serializable {
     @Override
     public String toString() {
         return "com.hnqd.pojo.Showroom[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Set<Maintenance> getMaintenanceSet() {
+        return maintenanceSet;
+    }
+
+    public void setMaintenanceSet(Set<Maintenance> maintenanceSet) {
+        this.maintenanceSet = maintenanceSet;
     }
     
 }

@@ -97,9 +97,13 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
                         "/api/v1/vehicles/update/**", "/api/v1/vehicles/update/images/**")
                 .hasAnyAuthority("ADMIN")
                 .antMatchers("/api/v1/bookings/create", "/api/v1/bookings/customer", 
-                        "/api/v1/bookings/customer/**")
+                        "/api/v1/bookings/customer/**", "api/v1/maintenances/create",
+                        "api/v1/maintenances/", "api/v1/rentals/create",
+                        "api/v1/rentals/")
                 .hasAnyAuthority("CUSTOMER")
-                .antMatchers("/api/v1/bookings/update/**", "/api/v1/bookings/staff")
+                .antMatchers("/api/v1/bookings/update/**", "/api/v1/bookings/staff",
+                        "api/v1/maintenances/", "api/v1/maintenances/update/**",
+                        "api/v1/rentals/", "api/v1/rentals/update/**")
                 .hasAnyAuthority("STAFF")
                 .antMatchers("/api/v1/auth/register", "/api/v1/auth/login", "/api/v1/users/**", 
                         "/api/v1/vehicles/**", "/cloudinary/upload", "/api/v1/showrooms/**").permitAll()

@@ -5,7 +5,6 @@
 package com.hnqd.pojo;
 
 import java.io.Serializable;
-import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,12 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -66,22 +63,6 @@ public class User implements Serializable {
     @Size(max = 255)
     @Column(name = "roleName")
     private String roleName;
-    @OneToMany(mappedBy = "customerId")
-    private Set<Booking> bookingSet;
-    @OneToMany(mappedBy = "staffId")
-    private Set<Booking> bookingSet1;
-    @OneToMany(mappedBy = "staffId")
-    private Set<Invoicemaintenance> invoicemaintenanceSet;
-    @OneToMany(mappedBy = "customerId")
-    private Set<Invoicebuy> invoicebuySet;
-    @OneToMany(mappedBy = "staffId")
-    private Set<Invoicebuy> invoicebuySet1;
-    @OneToMany(mappedBy = "userId")
-    private Set<Maintenance> maintenanceSet;
-    @OneToMany(mappedBy = "customerId")
-    private Set<Rental> rentalSet;
-    @OneToMany(mappedBy = "staffId")
-    private Set<Rental> rentalSet1;
 
     public User() {
     }
@@ -143,78 +124,6 @@ public class User implements Serializable {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
-    }
-
-    @XmlTransient
-    public Set<Booking> getBookingSet() {
-        return bookingSet;
-    }
-
-    public void setBookingSet(Set<Booking> bookingSet) {
-        this.bookingSet = bookingSet;
-    }
-
-    @XmlTransient
-    public Set<Booking> getBookingSet1() {
-        return bookingSet1;
-    }
-
-    public void setBookingSet1(Set<Booking> bookingSet1) {
-        this.bookingSet1 = bookingSet1;
-    }
-
-    @XmlTransient
-    public Set<Invoicemaintenance> getInvoicemaintenanceSet() {
-        return invoicemaintenanceSet;
-    }
-
-    public void setInvoicemaintenanceSet(Set<Invoicemaintenance> invoicemaintenanceSet) {
-        this.invoicemaintenanceSet = invoicemaintenanceSet;
-    }
-
-    @XmlTransient
-    public Set<Invoicebuy> getInvoicebuySet() {
-        return invoicebuySet;
-    }
-
-    public void setInvoicebuySet(Set<Invoicebuy> invoicebuySet) {
-        this.invoicebuySet = invoicebuySet;
-    }
-
-    @XmlTransient
-    public Set<Invoicebuy> getInvoicebuySet1() {
-        return invoicebuySet1;
-    }
-
-    public void setInvoicebuySet1(Set<Invoicebuy> invoicebuySet1) {
-        this.invoicebuySet1 = invoicebuySet1;
-    }
-
-    @XmlTransient
-    public Set<Maintenance> getMaintenanceSet() {
-        return maintenanceSet;
-    }
-
-    public void setMaintenanceSet(Set<Maintenance> maintenanceSet) {
-        this.maintenanceSet = maintenanceSet;
-    }
-
-    @XmlTransient
-    public Set<Rental> getRentalSet() {
-        return rentalSet;
-    }
-
-    public void setRentalSet(Set<Rental> rentalSet) {
-        this.rentalSet = rentalSet;
-    }
-
-    @XmlTransient
-    public Set<Rental> getRentalSet1() {
-        return rentalSet1;
-    }
-
-    public void setRentalSet1(Set<Rental> rentalSet1) {
-        this.rentalSet1 = rentalSet1;
     }
 
     @Override

@@ -14,9 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -73,19 +71,8 @@ public class Vehicle implements Serializable {
     @Size(max = 255)
     @Column(name = "status")
     private String status;
-    @JoinTable(name = "vehicle_image", joinColumns = {
-        @JoinColumn(name = "vehicle_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "image_id", referencedColumnName = "id")})
-    @ManyToMany
+    @OneToMany(mappedBy = "vehicleId")
     private Set<Image> imageSet;
-    @OneToMany(mappedBy = "vehicleId")
-    private Set<Booking> bookingSet;
-    @OneToMany(mappedBy = "vehicleId")
-    private Set<Invoicebuy> invoicebuySet;
-    @OneToMany(mappedBy = "vehicleId")
-    private Set<Maintenance> maintenanceSet;
-    @OneToMany(mappedBy = "vehicleId")
-    private Set<Rental> rentalSet;
     @JoinColumn(name = "showroom_id", referencedColumnName = "id")
     @ManyToOne
     private Showroom showroomId;
@@ -166,42 +153,6 @@ public class Vehicle implements Serializable {
 
     public void setImageSet(Set<Image> imageSet) {
         this.imageSet = imageSet;
-    }
-
-    @XmlTransient
-    public Set<Booking> getBookingSet() {
-        return bookingSet;
-    }
-
-    public void setBookingSet(Set<Booking> bookingSet) {
-        this.bookingSet = bookingSet;
-    }
-
-    @XmlTransient
-    public Set<Invoicebuy> getInvoicebuySet() {
-        return invoicebuySet;
-    }
-
-    public void setInvoicebuySet(Set<Invoicebuy> invoicebuySet) {
-        this.invoicebuySet = invoicebuySet;
-    }
-
-    @XmlTransient
-    public Set<Maintenance> getMaintenanceSet() {
-        return maintenanceSet;
-    }
-
-    public void setMaintenanceSet(Set<Maintenance> maintenanceSet) {
-        this.maintenanceSet = maintenanceSet;
-    }
-
-    @XmlTransient
-    public Set<Rental> getRentalSet() {
-        return rentalSet;
-    }
-
-    public void setRentalSet(Set<Rental> rentalSet) {
-        this.rentalSet = rentalSet;
     }
 
     public Showroom getShowroomId() {

@@ -126,7 +126,7 @@ public class BookingController {
     ) {
         try {
             String username = jwtTokenUtil.extractUsername(token.substring("Bearer ".length()));
-            // Thực hiện cập nhật booking và gửi email
+            
             bookingService.updateBooking(username, bookingId, status);
             return ResponseEntity.status(HttpStatus.OK).body("Booking updated successfully!");
         } catch (Exception e) {
