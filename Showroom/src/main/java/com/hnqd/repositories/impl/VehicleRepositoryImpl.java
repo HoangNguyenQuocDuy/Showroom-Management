@@ -184,12 +184,12 @@ public class VehicleRepositoryImpl implements VehicleRepository {
         vehicleRes.setDescription(vehicle.getDescription());
         vehicleRes.setBrand(vehicle.getBrand());
         vehicleRes.setStatus(vehicle.getStatus());
-        vehicleRes.setShowroom(mapToUserResponse(vehicle.getShowroomId()));
+        vehicleRes.setShowroom(mapShowroomResponse(vehicle.getShowroomId()));
 
         return vehicleRes;
     }
 
-    private ShowroomResponse mapToUserResponse(Showroom showroom) {
+    private ShowroomResponse mapShowroomResponse(Showroom showroom) {
         ShowroomResponse showroomRes = new ShowroomResponse();
         showroomRes.setId(showroom.getId());
         showroomRes.setName(showroom.getName());

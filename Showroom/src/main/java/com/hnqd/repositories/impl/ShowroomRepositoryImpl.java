@@ -43,7 +43,7 @@ public class ShowroomRepositoryImpl implements ShowroomRepository {
         List<ShowroomResponse> showroomRes = new ArrayList<>();
 
         for (Showroom showroom : list) {
-            showroomRes.add(mapToUserResponse(showroom));
+            showroomRes.add(mapShowroomResponse(showroom));
         }
 
         return showroomRes;
@@ -76,7 +76,7 @@ public class ShowroomRepositoryImpl implements ShowroomRepository {
             s.update(existingShowroom);
         }
 
-        return mapToUserResponse(existingShowroom);
+        return mapShowroomResponse(existingShowroom);
     }
 
     @Override
@@ -85,10 +85,10 @@ public class ShowroomRepositoryImpl implements ShowroomRepository {
         Query q = s.createQuery("FROM Showroom WHERE id=:id")
                 .setParameter("id", id);
 
-        return mapToUserResponse((Showroom) q.getSingleResult());
+        return mapShowroomResponse((Showroom) q.getSingleResult());
     }
 
-    private ShowroomResponse mapToUserResponse(Showroom showroom) {
+    private ShowroomResponse mapShowroomResponse(Showroom showroom) {
         ShowroomResponse showroomRes = new ShowroomResponse();
         showroomRes.setId(showroom.getId());
         showroomRes.setName(showroom.getName());

@@ -29,7 +29,7 @@ public class ShowroomController {
     @Autowired
     private ShowroomService showroomService;
 
-    @PostMapping("/")
+    @PostMapping("/create/")
     public ResponseEntity createShowroom(@RequestBody Showroom showroom) {
         try {
             showroomService.addShowroom(showroom);
@@ -77,7 +77,7 @@ public class ShowroomController {
         }
     }
 
-    @PatchMapping("/")
+    @PatchMapping("/update/")
     public ResponseEntity updateShowroomById(@RequestBody Showroom showroom) {
         try {
             ShowroomResponse showroomFind = showroomService.getShowroomById(showroom.getId());

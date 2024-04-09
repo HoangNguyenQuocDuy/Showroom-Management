@@ -7,12 +7,15 @@ package com.hnqd.configs;
 import com.cloudinary.Cloudinary;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -70,17 +73,36 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
+    
+    @Bean
+    public JavaMailSender javaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+        mailSender.setUsername("quocduy6114@gmail.com");
+        mailSender.setPassword("sdtp ahlt xkzk ptyh");
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.smtp.starttls.enable", "true");
+
+        return mailSender;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/showrooms/**", "/api/v1/vehicles/create/**, "
-                        + "/api/v1/vehicles/delete/**", "/api/v1/vehicles/update/**",
-                        "/api/v1/vehicles/update/images/**")
+                .antMatchers("/api/v1/showrooms/update/**", "/api/v1/showrooms/create/**", 
+                        "/api/v1/vehicles/create/**", "/api/v1/vehicles/delete/**", 
+                        "/api/v1/vehicles/update/**", "/api/v1/vehicles/update/images/**")
                 .hasAnyAuthority("ADMIN")
+                .antMatchers("/api/v1/bookings/create", "/api/v1/bookings/customer", 
+                        "/api/v1/bookings/customer/**")
+                .hasAnyAuthority("CUSTOMER")
+                .antMatchers("/api/v1/bookings/update/**", "/api/v1/bookings/staff")
+                .hasAnyAuthority("STAFF")
                 .antMatchers("/api/v1/auth/register", "/api/v1/auth/login", "/api/v1/users/**", 
-                        "/api/v1/vehicles/**", "/cloudinary/upload").permitAll()
+                        "/api/v1/vehicles/**", "/cloudinary/upload", "/api/v1/showrooms/**").permitAll()
                 .anyRequest().authenticated();
 //            .authorizeRequests()
 //            .antMatchers("/login", "Showroom/api/v1/auth/**").permitAll()

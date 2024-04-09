@@ -98,7 +98,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public UserResponse getUserById(int userId) {
         Session s = factory.getObject().getCurrentSession();
-        Query q = s.createQuery("FROM User WHERE id=:userId");
+        Query q = s.createQuery("FROM User WHERE id=:id");
         q.setParameter("id", userId);
 
         User user = null;
