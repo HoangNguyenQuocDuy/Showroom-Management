@@ -26,6 +26,7 @@ D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\repositories\
 D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\pojo\Rental.java
 D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\controllers\BookingController.java
 D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\services\impl\MaintenanceServiceImpl.java
+D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\dto\StatistisResponse.java
 D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\repositories\UserRepository.java
 D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\services\InvoicebuyService.java
 D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\pojo\Vehicle.java
@@ -36,6 +37,7 @@ D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\services\impl
 D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\services\impl\VehicleServiceImpl.java
 D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\configs\WebAppContextConfig.java
 D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\dto\InvoicebuyRequest.java
+D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\dao\InvoiceDao.java
 D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\pojo\Booking.java
 D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\services\impl\EmailServiceImpl.java
 D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\services\impl\UserServiceImpl.java
@@ -64,6 +66,7 @@ D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\controllers\A
 D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\services\RentalService.java
 D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\repositories\impl\InvoicemaintenanceRepositoryImpl.java
 D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\services\VehicleService.java
+D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\controllers\StatisticController.java
 D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\dto\UserRequest.java
 D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\services\CloudinaryService.java
 D:\spring\demo\Showroom-Management\Showroom\src\main\java\com\hnqd\dto\ShowroomResponse.java

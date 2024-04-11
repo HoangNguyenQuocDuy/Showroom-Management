@@ -23,7 +23,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan(basePackages = {
     "com.hnqd.controllers",
     "com.hnqd.repositories",
-    "com.hnqd.services"
+    "com.hnqd.services",
+    "com.hnqd.dao"
 })
 public class WebAppContextConfig implements WebMvcConfigurer {
 

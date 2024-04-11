@@ -9,10 +9,12 @@ com\hnqd\pojo\Vehicle.class
 com\hnqd\controllers\CloudinaryUploadController.class
 com\hnqd\controllers\RentalController.class
 com\hnqd\pojo\Invoicemaintenance_.class
+com\hnqd\dto\StatistisResponse.class
 com\hnqd\dto\UserRequest.class
 com\hnqd\pojo\User.class
 com\hnqd\services\impl\UserServiceImpl.class
 com\hnqd\configs\SpringSecrityConfig.class
+com\hnqd\dao\InvoiceDao.class
 com\hnqd\services\impl\MaintenanceServiceImpl.class
 com\hnqd\services\impl\CloudinaryServiceImpl.class
 com\hnqd\repositories\impl\ShowroomRepositoryImpl.class
@@ -20,6 +22,7 @@ com\hnqd\controllers\BookingController.class
 com\hnqd\pojo\Booking_.class
 com\hnqd\pojo\Maintenance_.class
 com\hnqd\services\CloudinaryService.class
+com\hnqd\controllers\StatisticController.class
 com\hnqd\pojo\Rental.class
 com\hnqd\repositories\impl\ImageRepositoryImpl.class
 com\hnqd\services\MaintenanceService.class
