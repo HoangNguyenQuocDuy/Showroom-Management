@@ -101,33 +101,25 @@ public class UserRepositoryImpl implements UserRepository {
         Query q = s.createQuery("FROM User WHERE id=:id");
         q.setParameter("id", userId);
 
-        User user = null;
-        UserResponse userResponse = null;
-        try {
-            user = (User) q.getSingleResult();
-            userResponse = mapToUserResponse(user);
-            return userResponse;
-        } catch (NoResultException e) {
-            return null;
-        }
+        return mapToUserResponse((User) q.getSingleResult());
     }
 
     @Override
     public UserResponse updateUser(Map<String, String> params) {
         Session s = factory.getObject().getCurrentSession();
         User user = s.get(User.class, params.get("userId"));
-        
+
         if (user != null) {
             String image = params.get("image");
             if (image != null && !image.isEmpty()) {
                 user.setImage(image);
             }
-            
+
             s.update(user);
-            
+
             return mapToUserResponse(user);
         }
-        
+
         return null;
     }
 }

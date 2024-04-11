@@ -41,6 +41,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Vehicle.findByStatus", query = "SELECT v FROM Vehicle v WHERE v.status = :status")})
 public class Vehicle implements Serializable {
 
+    @OneToMany(mappedBy = "vehicleId")
+    private Set<Rental> rentalSet;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -186,6 +189,15 @@ public class Vehicle implements Serializable {
     @Override
     public String toString() {
         return "com.hnqd.pojo.Vehicle[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Set<Rental> getRentalSet() {
+        return rentalSet;
+    }
+
+    public void setRentalSet(Set<Rental> rentalSet) {
+        this.rentalSet = rentalSet;
     }
     
 }

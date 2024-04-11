@@ -5,6 +5,7 @@
 package com.hnqd.pojo;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,10 +14,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,6 +37,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "User.findByImage", query = "SELECT u FROM User u WHERE u.image = :image"),
     @NamedQuery(name = "User.findByRoleName", query = "SELECT u FROM User u WHERE u.roleName = :roleName")})
 public class User implements Serializable {
+
+    @OneToMany(mappedBy = "staffId")
+    private Set<Invoicerent> invoicerentSet;
+    @OneToMany(mappedBy = "staffId")
+    private Set<Rental> rentalSet;
+    @OneToMany(mappedBy = "customerId")
+    private Set<Rental> rentalSet1;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -149,6 +159,33 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.hnqd.pojo.User[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Set<Invoicerent> getInvoicerentSet() {
+        return invoicerentSet;
+    }
+
+    public void setInvoicerentSet(Set<Invoicerent> invoicerentSet) {
+        this.invoicerentSet = invoicerentSet;
+    }
+
+    @XmlTransient
+    public Set<Rental> getRentalSet() {
+        return rentalSet;
+    }
+
+    public void setRentalSet(Set<Rental> rentalSet) {
+        this.rentalSet = rentalSet;
+    }
+
+    @XmlTransient
+    public Set<Rental> getRentalSet1() {
+        return rentalSet1;
+    }
+
+    public void setRentalSet1(Set<Rental> rentalSet1) {
+        this.rentalSet1 = rentalSet1;
     }
     
 }

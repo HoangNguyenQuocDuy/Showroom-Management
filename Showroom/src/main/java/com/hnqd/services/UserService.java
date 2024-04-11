@@ -6,7 +6,6 @@ package com.hnqd.services;
 
 import com.hnqd.dto.UserResponse;
 import com.hnqd.pojo.User;
-import com.hnqd.repositories.UserRepository;
 import java.util.List;
 import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetailsService;

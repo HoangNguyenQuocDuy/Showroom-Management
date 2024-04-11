@@ -16,6 +16,8 @@ public interface MaintenanceService {
     void addMaintenance(MaintenanceRequest maintenance, String token) throws Exception;
 
     List<MaintenanceResponse> getMaintenances(String token);
+    
+    MaintenanceResponse getMaintenanceById(int id);
 
     void updateMaintenance(String username, int maintenanceId, String status) throws Exception;
 }

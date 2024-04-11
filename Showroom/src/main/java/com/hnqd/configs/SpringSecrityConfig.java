@@ -73,7 +73,7 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
-    
+
     @Bean
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -92,21 +92,22 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/showrooms/update/**", "/api/v1/showrooms/create/**", 
-                        "/api/v1/vehicles/create/**", "/api/v1/vehicles/delete/**", 
+                .antMatchers("/api/v1/showrooms/update/**", "/api/v1/showrooms/create/**",
+                        "/api/v1/vehicles/create/**", "/api/v1/vehicles/delete/**",
                         "/api/v1/vehicles/update/**", "/api/v1/vehicles/update/images/**")
                 .hasAnyAuthority("ADMIN")
-                .antMatchers("/api/v1/bookings/create", "/api/v1/bookings/customer", 
-                        "/api/v1/bookings/customer/**", "api/v1/maintenances/create",
-                        "api/v1/maintenances/", "api/v1/rentals/create",
-                        "api/v1/rentals/")
-                .hasAnyAuthority("CUSTOMER")
                 .antMatchers("/api/v1/bookings/update/**", "/api/v1/bookings/staff",
-                        "api/v1/maintenances/", "api/v1/maintenances/update/**",
-                        "api/v1/rentals/", "api/v1/rentals/update/**")
+                        "/api/v1/maintenances/update/**",
+                        "/api/v1/rentals/update/**", "/api/v1/rentals/create/**",
+                        "/api/v1/invoicerents/create/**", "/api/v1/invoicemaintenances/create/**",
+                        "/api/v1/invoicebuys/create/**"
+                )
                 .hasAnyAuthority("STAFF")
-                .antMatchers("/api/v1/auth/register", "/api/v1/auth/login", "/api/v1/users/**", 
-                        "/api/v1/vehicles/**", "/cloudinary/upload", "/api/v1/showrooms/**").permitAll()
+                .antMatchers("/api/v1/bookings/create", "/api/v1/bookings/customer",
+                        "/api/v1/bookings/customer/**", "/api/v1/maintenances/create")
+                .hasAnyAuthority("CUSTOMER")
+                .antMatchers("/api/v1/auth/register", "/api/v1/auth/login", "/api/v1/users/**",
+                        "/api/v1/vehicles/**", "/cloudinary/upload", "/api/v1/showrooms/").permitAll()
                 .anyRequest().authenticated();
 //            .authorizeRequests()
 //            .antMatchers("/login", "Showroom/api/v1/auth/**").permitAll()

@@ -18,4 +18,6 @@ public interface RentalService {
     List<RentalResponse> getRentals(String token);
 
     void updateRentals(String username, int rentalId, String status) throws Exception;
+    
+    RentalResponse getRentalById(int id);
 }

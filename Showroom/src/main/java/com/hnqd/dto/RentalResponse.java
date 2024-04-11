@@ -27,7 +27,7 @@ public class RentalResponse {
     private UserResponse customer;
     private UserResponse staff;
     
-    public Rental transferToBooking() {
+    public Rental tranferToRental() {
         Rental rental = new Rental();
         rental.setId(id);
         rental.setTime(time);

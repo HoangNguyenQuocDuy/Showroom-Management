@@ -60,6 +60,9 @@ public class Invoicerent implements Serializable {
     @JoinColumn(name = "rental_id", referencedColumnName = "id")
     @ManyToOne
     private Rental rentalId;
+    @JoinColumn(name = "staff_id", referencedColumnName = "id")
+    @ManyToOne
+    private User staffId;
 
     public Invoicerent() {
     }
@@ -114,6 +117,14 @@ public class Invoicerent implements Serializable {
 
     public void setRentalId(Rental rentalId) {
         this.rentalId = rentalId;
+    }
+
+    public User getStaffId() {
+        return staffId;
+    }
+
+    public void setStaffId(User staffId) {
+        this.staffId = staffId;
     }
 
     @Override

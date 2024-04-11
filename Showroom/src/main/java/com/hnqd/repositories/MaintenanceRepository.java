@@ -20,7 +20,5 @@ public interface MaintenanceRepository {
 
     MaintenanceResponse updateMaintenance(User staff, int maintenanceId, String status);
 
-//    MaintenanceResponse getBookingById(int id, int customerId);
-
-    MaintenanceResponse getBookingById(int id);
+    MaintenanceResponse getMaintenanceById(int id);
 }

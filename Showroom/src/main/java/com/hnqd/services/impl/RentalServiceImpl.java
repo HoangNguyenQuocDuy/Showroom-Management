@@ -105,5 +105,10 @@ public class RentalServiceImpl implements RentalService{
             emailService.sendMail(recipientEmail, message);
         }
     }
+
+    @Override
+    public RentalResponse getRentalById(int id) {
+        return rentalRepository.getRentalById(id);
+    }
     
 }

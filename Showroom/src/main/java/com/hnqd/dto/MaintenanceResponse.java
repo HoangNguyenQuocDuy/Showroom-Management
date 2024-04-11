@@ -33,7 +33,7 @@ public class MaintenanceResponse {
     private UserResponse staff;
     private ShowroomResponse showroom;
     
-    public Maintenance transferToBooking() throws ParseException {
+    public Maintenance transferToMaintenance() throws ParseException {
         
         Maintenance maintenance = new Maintenance();
         maintenance.setId(id);
@@ -50,7 +50,7 @@ public class MaintenanceResponse {
     }
     
     public Date convertToDateTime(String dateTimeString) throws ParseException {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         
         Date dateTime = dateFormat.parse(dateTimeString);
         return dateTime;

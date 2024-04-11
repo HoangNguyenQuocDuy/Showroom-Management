@@ -139,7 +139,7 @@ public class MaintenanceRepositoryImpl implements MaintenanceRepository {
     }
 
     @Override
-    public MaintenanceResponse getBookingById(int id) {
+    public MaintenanceResponse getMaintenanceById(int id) {
         Session s = factory.getObject().getCurrentSession();
         Query q = s.createQuery("FROM Maintenance WHERE id=:id").setParameter("id", id);
 

@@ -49,7 +49,7 @@ public class MaintenanceServiceImpl implements MaintenanceService {
     @Override
     public void addMaintenance(MaintenanceRequest maintenanceRequest, String token) throws Exception {
         String username = jwtTokenUtil.extractUsername(token);
-        
+
         UserResponse user = userService.getUserByUsername(username);
         if (user == null) {
             throw new Exception("User not found!");
@@ -87,13 +87,13 @@ public class MaintenanceServiceImpl implements MaintenanceService {
     @Override
     public void updateMaintenance(String token, int maintenanceId, String status) throws Exception {
         String username = jwtTokenUtil.extractUsername(token);
-        
+
         UserResponse user = userService.getUserByUsername(username);
         if (user == null) {
             throw new Exception("User not found!");
         }
 
-        MaintenanceResponse maintenance = maintenanceRepository.getBookingById(maintenanceId);
+        MaintenanceResponse maintenance = maintenanceRepository.getMaintenanceById(maintenanceId);
         if (maintenance == null) {
             throw new Exception("Maintenance not found!");
         }
@@ -106,6 +106,11 @@ public class MaintenanceServiceImpl implements MaintenanceService {
 
             emailService.sendMail(recipientEmail, message);
         }
+    }
+
+    @Override
+    public MaintenanceResponse getMaintenanceById(int id) {
+        return maintenanceRepository.getMaintenanceById(id);
     }
 
 }
