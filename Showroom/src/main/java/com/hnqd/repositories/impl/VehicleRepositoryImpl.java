@@ -54,8 +54,30 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     public List<VehicleResponse> getVehicles(Map<String, String> params) {
         Session s = factory.getObject().getCurrentSession();
 
-        String hql = "FROM Vehicle";
+        String hql = "FROM Vehicle v WHERE 1=1";
+
+        if (params.containsKey("brand") && !params.get("brand").equals("")) {
+            hql += " AND v.brand LIKE :brand";
+        }
+        if (params.containsKey("name") && !params.get("name").equals("")) {
+            hql += " AND v.name LIKE :name";
+        }
+        if (params.containsKey("showroomName") && !params.get("showroomName").equals("")) {
+            hql += " AND v.showroomId.name LIKE :showroomName";
+        }
+
         Query query = s.createQuery(hql);
+
+        if (params.containsKey("brand") && !params.get("brand").isEmpty()) {
+            query.setParameter("brand", "%" + params.get("brand") + "%");
+        }
+        if (params.containsKey("name") && !params.get("name").isEmpty()) {
+            query.setParameter("name", "%" + params.get("name") + "%");
+        }
+        if (params.containsKey("showroomName") && !params.get("showroomName").isEmpty()) {
+            query.setParameter("showroomName", "%" + params.get("showroomName") + "%");
+        }
+
         List<Vehicle> vehicles = query.getResultList();
         List<VehicleResponse> result = new ArrayList<>();
 
@@ -139,7 +161,7 @@ public class VehicleRepositoryImpl implements VehicleRepository {
             if (status != null && !status.isEmpty()) {
                 existingVehicle.setStatus(status);
             }
-            
+
             String image = params.get("image");
             if (image != null && !image.isEmpty()) {
                 existingVehicle.setImage(image);
