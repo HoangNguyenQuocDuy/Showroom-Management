@@ -6,6 +6,7 @@ package com.hnqd.configs;
 
 import com.cloudinary.Cloudinary;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 /**
  *
  * @author DELL
@@ -91,15 +94,17 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeRequests()
                 .antMatchers("/api/v1/showrooms/update/**", "/api/v1/showrooms/create/**",
+                        "/api/v1/showrooms/delete/**",
                         "/api/v1/vehicles/create/**", "/api/v1/vehicles/delete/**",
                         "/api/v1/vehicles/update/**", "/api/v1/vehicles/update/images/**",
                         "/api/v1/statistics/**")
                 .hasAnyAuthority("ADMIN")
                 .antMatchers("/api/v1/bookings/update/**", "/api/v1/bookings/staff",
                         "/api/v1/maintenances/update/**",
-                        "/api/v1/rentals/update/**", "/api/v1/rentals/create/**",
+                        "/api/v1/rentals/update/**",
                         "/api/v1/invoicerents/create/**", "/api/v1/invoicemaintenances/create/**",
                         "/api/v1/invoicebuys/create/**"
                 )
@@ -108,7 +113,8 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
                         "/api/v1/bookings/customer/**", "/api/v1/maintenances/create")
                 .hasAnyAuthority("CUSTOMER")
                 .antMatchers("/api/v1/auth/register", "/api/v1/auth/login", "/api/v1/users/**",
-                        "/api/v1/vehicles/**", "/cloudinary/upload", "/api/v1/showrooms/").permitAll()
+                        "/api/v1/vehicles/**", "/cloudinary/upload", "/api/v1/showrooms/",
+                        "/api/v1/rentals/create", "/api/v1/rentals/").permitAll()
                 .anyRequest().authenticated();
 //            .authorizeRequests()
 //            .antMatchers("/login", "Showroom/api/v1/auth/**").permitAll()
@@ -133,6 +139,20 @@ public class SpringSecrityConfig extends WebSecurityConfigurerAdapter {
         config.put("secure", true);
 
         return new Cloudinary(config);
+    }
+    
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
     }
 
 }

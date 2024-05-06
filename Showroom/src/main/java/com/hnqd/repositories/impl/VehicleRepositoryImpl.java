@@ -53,47 +53,9 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     @Override
     public List<VehicleResponse> getVehicles(Map<String, String> params) {
         Session s = factory.getObject().getCurrentSession();
-        CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<Vehicle> q = b.createQuery(Vehicle.class);
-        Root r = q.from(Vehicle.class);
-        q.select(r);
 
-        List<Predicate> predicates = new ArrayList<>();
-
-        String kw = params.get("kw");
-
-        if (kw != null && !kw.isEmpty()) {
-            predicates.add(b.like(r.get("name"), String.format("%%%s%%", kw)));
-        }
-
-        String fromPrice = params.get("fromPrice");
-        if (fromPrice != null && !fromPrice.isEmpty()) {
-            predicates.add(b.greaterThanOrEqualTo(r.get("price"), Double.parseDouble(fromPrice)));
-        }
-
-        String toPrice = params.get("toPrice");
-        if (toPrice != null && !toPrice.isEmpty()) {
-            predicates.add(b.lessThanOrEqualTo(r.get("price"), Double.parseDouble(toPrice)));
-        }
-
-        String showroomId = params.get("showroomId");
-        if (showroomId != null && !showroomId.isEmpty()) {
-            predicates.add(b.equal(r.get("showroomId"), Integer.parseInt(showroomId)));
-        }
-
-        q.where(predicates.toArray(Predicate[]::new));
-        q.orderBy(b.desc(r.get("id")));
-
-        Query query = s.createQuery(q);
-
-        String p = params.get("page");
-        if (p != null && !p.isEmpty()) {
-            int pageSize = Integer.parseInt(env.getProperty("vehicles.pageSize").toString());
-            int start = (Integer.parseInt(p) - 1) * pageSize;
-            query.setFirstResult(start);
-            query.setMaxResults(pageSize);
-        }
-
+        String hql = "FROM Vehicle";
+        Query query = s.createQuery(hql);
         List<Vehicle> vehicles = query.getResultList();
         List<VehicleResponse> result = new ArrayList<>();
 
@@ -102,6 +64,40 @@ public class VehicleRepositoryImpl implements VehicleRepository {
         }
 
         return result;
+
+//        String kw = params.get("kw");
+//
+//        if (kw != null && !kw.isEmpty()) {
+//            predicates.add(b.like(r.get("name"), String.format("%%%s%%", kw)));
+//        }
+//
+//        String fromPrice = params.get("fromPrice");
+//        if (fromPrice != null && !fromPrice.isEmpty()) {
+//            predicates.add(b.greaterThanOrEqualTo(r.get("price"), Double.parseDouble(fromPrice)));
+//        }
+//
+//        String toPrice = params.get("toPrice");
+//        if (toPrice != null && !toPrice.isEmpty()) {
+//            predicates.add(b.lessThanOrEqualTo(r.get("price"), Double.parseDouble(toPrice)));
+//        }
+//
+//        String showroomId = params.get("showroomId");
+//        if (showroomId != null && !showroomId.isEmpty()) {
+//            predicates.add(b.equal(r.get("showroomId"), Integer.parseInt(showroomId)));
+//        }
+//
+//        q.where(predicates.toArray(Predicate[]::new));
+//        q.orderBy(b.desc(r.get("id")));
+//
+//        Query query = s.createQuery(q);
+//
+//        String p = params.get("page");
+//        if (p != null && !p.isEmpty()) {
+//            int pageSize = Integer.parseInt(env.getProperty("vehicles.pageSize").toString());
+//            int start = (Integer.parseInt(p) - 1) * pageSize;
+//            query.setFirstResult(start);
+//            query.setMaxResults(pageSize);
+//        }
     }
 
     @Override
@@ -143,6 +139,11 @@ public class VehicleRepositoryImpl implements VehicleRepository {
             if (status != null && !status.isEmpty()) {
                 existingVehicle.setStatus(status);
             }
+            
+            String image = params.get("image");
+            if (image != null && !image.isEmpty()) {
+                existingVehicle.setImage(image);
+            }
 
             s.update(existingVehicle);
             return mapToVehicleResponse(existingVehicle);
@@ -166,7 +167,7 @@ public class VehicleRepositoryImpl implements VehicleRepository {
         Vehicle existingVehicle = s.get(Vehicle.class, id);
 
         if (existingVehicle != null) {
-            existingVehicle.getImageSet().addAll(images);
+//            existingVehicle.getImageSet().addAll(images);
 
             s.update(existingVehicle);
             return mapToVehicleResponse(existingVehicle);
@@ -184,6 +185,9 @@ public class VehicleRepositoryImpl implements VehicleRepository {
         vehicleRes.setDescription(vehicle.getDescription());
         vehicleRes.setBrand(vehicle.getBrand());
         vehicleRes.setStatus(vehicle.getStatus());
+        if (vehicle.getImage() != null) {
+            vehicleRes.setImage(vehicle.getImage());
+        }
         vehicleRes.setShowroom(mapShowroomResponse(vehicle.getShowroomId()));
 
         return vehicleRes;

@@ -29,10 +29,11 @@ import org.springframework.stereotype.Service;
  * @author DELL
  */
 @Service
-public class RentalServiceImpl implements RentalService{
+public class RentalServiceImpl implements RentalService {
+
     @Autowired
     private RentalRepository rentalRepository;
-    
+
     @Autowired
     private UserService userService;
 
@@ -48,7 +49,7 @@ public class RentalServiceImpl implements RentalService{
     @Override
     public void addRental(RentalRequest rentalRequest, String token) throws Exception {
         String username = jwtTokenUtil.extractUsername(token);
-        
+
         UserResponse user = userService.getUserByUsername(username);
         if (user == null) {
             throw new Exception("User not found!");
@@ -60,13 +61,14 @@ public class RentalServiceImpl implements RentalService{
         }
 
         Rental rental = new Rental();
-        rental.setTime(convertToDateTime(rentalRequest.getTime().toString()));
+        rental.setStartDate(convertToDateTime(rentalRequest.getStartDate().toString()));
+        rental.setEndDate(convertToDateTime(rentalRequest.getEndDate().toString()));
         rental.setCustomerId(user.transferUser());
         rental.setVehicleId(vehicleResponse.transferVehicle());
 
         rentalRepository.addRental(rental);
     }
-    
+
     public Date convertToDateTime(String dateTimeString) throws ParseException {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
@@ -85,7 +87,7 @@ public class RentalServiceImpl implements RentalService{
     @Override
     public void updateRentals(String token, int rentalId, String status) throws Exception {
         String username = jwtTokenUtil.extractUsername(token);
-        
+
         UserResponse user = userService.getUserByUsername(username);
         if (user == null) {
             throw new Exception("User not found!");
@@ -100,7 +102,7 @@ public class RentalServiceImpl implements RentalService{
 
         if (updatedRental != null && updatedRental.getStaff() != null) {
             String recipientEmail = updatedRental.getCustomer().getEmail();
-            String message = "Your Rental of vehicle \'" + updatedRental.getVehicle().getName() + "\' has been confirmed";
+            String message = "Your Rental of vehicle \'" + updatedRental.getVehicle().getName() + "\' has been '" + status + "'";
 
             emailService.sendMail(recipientEmail, message);
         }
@@ -110,5 +112,5 @@ public class RentalServiceImpl implements RentalService{
     public RentalResponse getRentalById(int id) {
         return rentalRepository.getRentalById(id);
     }
-    
+
 }

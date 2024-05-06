@@ -36,7 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Rental.findAll", query = "SELECT r FROM Rental r"),
     @NamedQuery(name = "Rental.findById", query = "SELECT r FROM Rental r WHERE r.id = :id"),
     @NamedQuery(name = "Rental.findByStatus", query = "SELECT r FROM Rental r WHERE r.status = :status"),
-    @NamedQuery(name = "Rental.findByTime", query = "SELECT r FROM Rental r WHERE r.time = :time"),
+    @NamedQuery(name = "Rental.findByStartDate", query = "SELECT r FROM Rental r WHERE r.startDate = :startDate"),
+    @NamedQuery(name = "Rental.findByEndDate", query = "SELECT r FROM Rental r WHERE r.endDate = :endDate"),
     @NamedQuery(name = "Rental.findByCreatedAt", query = "SELECT r FROM Rental r WHERE r.createdAt = :createdAt"),
     @NamedQuery(name = "Rental.findByUpdatedAt", query = "SELECT r FROM Rental r WHERE r.updatedAt = :updatedAt")})
 public class Rental implements Serializable {
@@ -50,9 +51,12 @@ public class Rental implements Serializable {
     @Size(max = 255)
     @Column(name = "status")
     private String status;
-    @Column(name = "time")
+    @Column(name = "startDate")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date time;
+    private Date startDate;
+    @Column(name = "endDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date endDate;
     @Column(name = "createdAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
@@ -94,12 +98,20 @@ public class Rental implements Serializable {
         this.status = status;
     }
 
-    public Date getTime() {
-        return time;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setStartDate(Date time) {
+        this.startDate = time;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date time) {
+        this.endDate = time;
     }
 
     public Date getCreatedAt() {
@@ -175,5 +187,5 @@ public class Rental implements Serializable {
     public String toString() {
         return "com.hnqd.pojo.Rental[ id=" + id + " ]";
     }
-    
+
 }

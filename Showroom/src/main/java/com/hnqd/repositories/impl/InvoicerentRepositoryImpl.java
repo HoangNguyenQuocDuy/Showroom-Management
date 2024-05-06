@@ -136,7 +136,8 @@ public class InvoicerentRepositoryImpl implements InvoicerentRepository {
         RentalResponse rentalResponse = new RentalResponse();
         rentalResponse.setId(rental.getId());
         rentalResponse.setCreatedDate(rental.getCreatedAt());
-        rentalResponse.setTime(rental.getTime());
+        rentalResponse.setStartDate(rental.getStartDate());
+        rentalResponse.setEndDate(rental.getEndDate());
         rentalResponse.setCustomer(mapToUserResponse(rental.getCustomerId()));
         rentalResponse.setVehicle(mapToVehicleResponse(rental.getVehicleId()));
         if (rental.getStatus() != null) {

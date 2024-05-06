@@ -59,13 +59,26 @@ public class VehicleController {
             );
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(
-                    "Failed when get showrooms " + e.getMessage()
+                    "Failed when get vehicles " + e.getMessage()
+            );
+        }
+    }
+    
+    @GetMapping("/{vehicleId}")
+    public ResponseEntity getVehicle(@PathVariable("vehicleId") int vehicleId) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    vehicleService.getVehicleById(vehicleId)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(
+                    "Failed when get vehicle by ID " + e.getMessage()
             );
         }
     }
 
     @PatchMapping("/update/")
-    public ResponseEntity updateVehicleById(@RequestParam Map<String, String> params) {
+    public ResponseEntity updateVehicleById(@RequestBody Map<String, String> params) {
         try {
             int vehicleId = Integer.parseInt(params.get("vehicleId"));
 

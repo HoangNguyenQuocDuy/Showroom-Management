@@ -18,26 +18,29 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RentalResponse {
+
     private int id;
-    private Date time;
+    private Date startDate;
+    private Date endDate;
     private String status;
     private VehicleResponse vehicle;
     private Date createdDate;
     private Date updatedDate;
     private UserResponse customer;
     private UserResponse staff;
-    
+
     public Rental tranferToRental() {
         Rental rental = new Rental();
         rental.setId(id);
-        rental.setTime(time);
+        rental.setStartDate(startDate);
+        rental.setEndDate(endDate);
         rental.setStatus(status);
         rental.setCreatedAt(createdDate);
-        rental.setUpdatedAt(updatedDate);        
-        rental.setVehicleId(vehicle.transferVehicle());        
-        rental.setCustomerId(customer.transferUser());        
+        rental.setUpdatedAt(updatedDate);
+        rental.setVehicleId(vehicle.transferVehicle());
+        rental.setCustomerId(customer.transferUser());
         rental.setStaffId(staff.transferUser());
-        
+
         return rental;
     }
 }

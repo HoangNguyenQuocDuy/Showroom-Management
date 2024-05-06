@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Booking.findByTime", query = "SELECT b FROM Booking b WHERE b.time = :time")})
 public class Booking implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -174,5 +174,5 @@ public class Booking implements Serializable {
     public String toString() {
         return "com.hnqd.pojo.Booking[ id=" + id + " ]";
     }
-    
+
 }

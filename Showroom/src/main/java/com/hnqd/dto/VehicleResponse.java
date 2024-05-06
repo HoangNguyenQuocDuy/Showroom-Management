@@ -26,7 +26,7 @@ public class VehicleResponse {
     private String status;
     private String brand;
     private ShowroomResponse showroom;
-    private String[] images;
+    private String image;
     
     public Vehicle transferVehicle() {
         Vehicle vehicle = new Vehicle();

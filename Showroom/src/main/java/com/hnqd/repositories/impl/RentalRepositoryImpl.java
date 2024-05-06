@@ -61,7 +61,7 @@ public class RentalRepositoryImpl implements RentalRepository {
             return rentalResponses;
         } else if (roleName.equals("STAFF")) {
             Query<Rental> query = s.createQuery(
-                    "FROM Rental WHERE status =:status AND staffId IS NULL ORDER BY createdDate ASC",
+                    "FROM Rental WHERE status =:status",
                     Rental.class);
             query.setParameter("status", "Pending");
             List<Rental> rentals = query.getResultList();
@@ -70,7 +70,19 @@ public class RentalRepositoryImpl implements RentalRepository {
             for (Rental rental : rentals) {
                 rentalResponses.add(mapToRentalResponse(rental));
             }
-            
+
+            return rentalResponses;
+        } else if (roleName.equals("ADMIN")) {
+            Query<Rental> query = s.createQuery(
+                    "FROM Rental",
+                    Rental.class);
+            List<Rental> rentals = query.getResultList();
+
+            List<RentalResponse> rentalResponses = new ArrayList<>();
+            for (Rental rental : rentals) {
+                rentalResponses.add(mapToRentalResponse(rental));
+            }
+
             return rentalResponses;
         }
 
@@ -86,7 +98,7 @@ public class RentalRepositoryImpl implements RentalRepository {
             rental.setStatus(status);
             rental.setUpdatedAt(new Date());
             rental.setStaffId(staff);
-            
+
             s.update(rental);
 
             return mapToRentalResponse(rental);
@@ -102,12 +114,13 @@ public class RentalRepositoryImpl implements RentalRepository {
 
         return mapToRentalResponse((Rental) q.getSingleResult());
     }
-    
+
     private RentalResponse mapToRentalResponse(Rental rental) {
         RentalResponse rentalResponse = new RentalResponse();
         rentalResponse.setId(rental.getId());
         rentalResponse.setCreatedDate(rental.getCreatedAt());
-        rentalResponse.setTime(rental.getTime());
+        rentalResponse.setStartDate(rental.getStartDate());
+        rentalResponse.setEndDate(rental.getEndDate());
         rentalResponse.setCustomer(mapToUserResponse(rental.getCustomerId()));
         rentalResponse.setVehicle(mapToVehicleResponse(rental.getVehicleId()));
         if (rental.getStatus() != null) {
@@ -124,7 +137,7 @@ public class RentalRepositoryImpl implements RentalRepository {
 
         return rentalResponse;
     }
-    
+
     private UserResponse mapToUserResponse(User user) {
         UserResponse userRes = new UserResponse();
         userRes.setUserId(user.getId());
@@ -145,12 +158,13 @@ public class RentalRepositoryImpl implements RentalRepository {
 
         return showroomRes;
     }
-    
+
     private VehicleResponse mapToVehicleResponse(Vehicle vehicle) {
         VehicleResponse vehicleRes = new VehicleResponse();
         vehicleRes.setId(vehicle.getId());
         vehicleRes.setName(vehicle.getName());
         vehicleRes.setPrice(vehicle.getPrice());
+        vehicleRes.setImage(vehicle.getImage());
         vehicleRes.setSpecifications(vehicle.getSpecifications());
         vehicleRes.setDescription(vehicle.getDescription());
         vehicleRes.setBrand(vehicle.getBrand());

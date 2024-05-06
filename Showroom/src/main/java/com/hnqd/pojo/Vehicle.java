@@ -6,7 +6,6 @@ package com.hnqd.pojo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,12 +17,10 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -38,11 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Vehicle.findByName", query = "SELECT v FROM Vehicle v WHERE v.name = :name"),
     @NamedQuery(name = "Vehicle.findByPrice", query = "SELECT v FROM Vehicle v WHERE v.price = :price"),
     @NamedQuery(name = "Vehicle.findByBrand", query = "SELECT v FROM Vehicle v WHERE v.brand = :brand"),
-    @NamedQuery(name = "Vehicle.findByStatus", query = "SELECT v FROM Vehicle v WHERE v.status = :status")})
+    @NamedQuery(name = "Vehicle.findByStatus", query = "SELECT v FROM Vehicle v WHERE v.status = :status"),
+    @NamedQuery(name = "Vehicle.findByImage", query = "SELECT v FROM Vehicle v WHERE v.image = :image")})
 public class Vehicle implements Serializable {
-
-    @OneToMany(mappedBy = "vehicleId")
-    private Set<Rental> rentalSet;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -74,8 +69,9 @@ public class Vehicle implements Serializable {
     @Size(max = 255)
     @Column(name = "status")
     private String status;
-    @OneToMany(mappedBy = "vehicleId")
-    private Set<Image> imageSet;
+    @Size(max = 255)
+    @Column(name = "image")
+    private String image;
     @JoinColumn(name = "showroom_id", referencedColumnName = "id")
     @ManyToOne
     private Showroom showroomId;
@@ -149,13 +145,12 @@ public class Vehicle implements Serializable {
         this.status = status;
     }
 
-    @XmlTransient
-    public Set<Image> getImageSet() {
-        return imageSet;
+    public String getImage() {
+        return image;
     }
 
-    public void setImageSet(Set<Image> imageSet) {
-        this.imageSet = imageSet;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Showroom getShowroomId() {
@@ -191,13 +186,4 @@ public class Vehicle implements Serializable {
         return "com.hnqd.pojo.Vehicle[ id=" + id + " ]";
     }
 
-    @XmlTransient
-    public Set<Rental> getRentalSet() {
-        return rentalSet;
-    }
-
-    public void setRentalSet(Set<Rental> rentalSet) {
-        this.rentalSet = rentalSet;
-    }
-    
 }

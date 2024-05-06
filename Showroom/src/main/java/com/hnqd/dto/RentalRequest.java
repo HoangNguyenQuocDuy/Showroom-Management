@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RentalRequest {
-    private String time;
+    private String startDate;
+    private String endDate;
     private int vehicleId;
 }
